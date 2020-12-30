@@ -10,8 +10,13 @@ Timer::Timer()
 Timer::~Timer()
 {
     m_endPoint = std::chrono::steady_clock::now();
+    LogDuration();
+    if (fout.is_open())
+    {
+        fout.close();
+        std::cout << "Something went wrong in File Stream Element Deleation" << std::endl;
+    }
 }
-
 void Timer::setFilePath()
 {
     m_filepath.append(m_date.getDateAsStr());
@@ -22,7 +27,18 @@ void Timer::setFilePath()
 double Timer::LogDuration()
 {
     m_duration = m_endPoint - m_startPoint;
-    fout << "Time Taken: " << ((m_duration.count()) * 1000) << std::endl;
+
+    if (fout.is_open())
+    {
+        fout << "Time Taken: " << ((m_duration.count()) * 1000) << std::endl;
+        fout.close();
+    }
 
     return ((m_duration.count()) * 1000);
+}
+
+void Timer::getFilePath()
+{
+    std::cout << "Enter FilePath: ";
+    std::getline(std::cin, m_filepath);
 }

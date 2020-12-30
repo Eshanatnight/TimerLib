@@ -1,4 +1,5 @@
 #pragma once
+#include <iostream>
 #include <fstream>
 #include <chrono>
 #include <sstream>
@@ -22,7 +23,7 @@ class Timer
             [[nodiscard]] std::string getDateAsStr() const
             {
                 std::stringstream ss;
-                ss << (datetime->tm_mday) << "_" << (datetime->tm_mon) + 1 << "_" << (datetime->tm_year) + 1900;
+                ss << (datetime->tm_mday) << "_" << ((datetime->tm_mon) + 1) << "_" << ((datetime->tm_year) + 1900);
                 return ss.str();
             }
 
@@ -43,6 +44,9 @@ class Timer
     public:
         Timer();
         ~Timer();
+        void getFilePath();
+
+    private:
         void setFilePath();
         double LogDuration();
 };
